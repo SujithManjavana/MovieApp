@@ -117,7 +117,7 @@ fun MyApp(content: @Composable () -> Unit) {
 @Composable
 fun MyTopAppBar() {
     TopAppBar(
-        title = { Text(text = "SemicolonSpace") },
+        title = { Text(text = "Movie App") },
         colors = TopAppBarDefaults.topAppBarColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.4f)
         )
