@@ -31,6 +31,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.sujith.movieapp.model.Movie
+import com.sujith.movieapp.model.getMovies
+import com.sujith.movieapp.navigation.MovieScreens
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -48,13 +51,13 @@ fun HomeScreen(navController: NavController) {
 @Composable
 fun MainContent(
     navController: NavController,
-    movies: List<String> = listOf("Avatar", "Titanic", "Terminator", "Foo", "Bar")
+    movies: List<Movie> = getMovies()
 ) {
     Column {
         LazyColumn {
             items(items = movies) {
                 MovieItem(movie = it) {
-                    Log.e("TAG", "MainContent: $it")
+                    navController.navigate(route = MovieScreens.DetailsScreen.name+"/$it")
                 }
             }
         }
@@ -74,14 +77,14 @@ fun MyTopAppBar() {
 
 
 @Composable
-fun MovieItem(movie: String, onItemClick: (String) -> Unit) {
+fun MovieItem(movie: Movie, onItemClick: (String) -> Unit) {
     Card(
         modifier = Modifier
             .padding(16.dp)
             // .height(130.dp)
             .fillMaxWidth()
             .clickable {
-                onItemClick(movie)
+                onItemClick(movie.id)
             },
         shape = RoundedCornerShape(corner = CornerSize(12.dp)),
         elevation = CardDefaults.cardElevation(6.dp)
@@ -97,7 +100,7 @@ fun MovieItem(movie: String, onItemClick: (String) -> Unit) {
             ) {
                 Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Movie image")
             }
-            Text(text = movie)
+            Text(text = movie.title)
         }
     }
 }
