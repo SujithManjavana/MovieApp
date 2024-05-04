@@ -41,85 +41,24 @@ import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.sujith.movieapp.navigation.MovieNavigation
 import com.sujith.movieapp.ui.theme.MovieAppTheme
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            MyApp {
-                MainContent()
-            }
+            MovieNavigation()
         }
     }
 }
 
-@Composable
-fun MainContent(movies: List<String> = listOf("Avatar", "Titanic", "Terminator", "Foo", "Bar")) {
-    Column {
-        LazyColumn {
-            items(items = movies) {
-                MovieItem(movie = it){
-                    Log.e("TAG", "MainContent: $it" )
-                }
-            }
-        }
-    }
-}
-
-
-@Composable
-fun MovieItem(movie: String, onItemClick: (String) -> Unit) {
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            // .height(130.dp)
-            .fillMaxWidth()
-            .clickable {
-                onItemClick(movie)
-            },
-        shape = RoundedCornerShape(corner = CornerSize(12.dp)),
-        elevation = CardDefaults.cardElevation(6.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Surface(
-                modifier = Modifier
-                    .size(100.dp)
-                    .padding(12.dp), shape = RectangleShape
-            ) {
-                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Movie image")
-            }
-            Text(text = movie)
-        }
-    }
-}
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
 fun MyApp(content: @Composable () -> Unit) {
     MovieAppTheme {
-        Scaffold(topBar = { MyTopAppBar() }) {
-            Surface(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues = it)
-            ) {
-                content()
-            }
-        }
+        MovieNavigation()
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
-@Composable
-fun MyTopAppBar() {
-    TopAppBar(
-        title = { Text(text = "Movie App") },
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.4f)
-        )
-    )
-}
