@@ -19,6 +19,8 @@ import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Divider
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -60,7 +62,7 @@ fun MovieItem(movie: Movie = getMovies()[0], onItemClick: (String) -> Unit = {})
     Card(
         modifier = Modifier
             .padding(16.dp)
-           // .height(130.dp)
+            // .height(130.dp)
             .fillMaxWidth()
             .clickable {
                 onItemClick(movie.id)
@@ -97,19 +99,24 @@ fun MovieItem(movie: Movie = getMovies()[0], onItemClick: (String) -> Unit = {})
                 Text(text = "Year ${movie.year}", style = MaterialTheme.typography.bodyMedium)
 
                 AnimatedVisibility(visible = expanded) {
-                    Text(buildAnnotatedString {
-                        withStyle(style = SpanStyle(fontSize = 13.sp)) {
-                            append("Plot: ")
-                        }
-                        withStyle(
-                            style = SpanStyle(
-                                fontSize = 13.sp,
-                                fontWeight = FontWeight.Bold
-                            )
-                        ) {
-                            append(movie.plot)
-                        }
-                    })
+                    Column {
+                        Text(buildAnnotatedString {
+                            withStyle(style = SpanStyle(fontSize = 13.sp)) {
+                                append("Plot: ")
+                            }
+                            withStyle(
+                                style = SpanStyle(
+                                    fontSize = 13.sp,
+                                    fontWeight = FontWeight.Light
+                                )
+                            ) {
+                                append(movie.plot)
+                            }
+                        })
+                        HorizontalDivider(modifier = Modifier.padding(3.dp))
+                        Text(text = movie.actors, style = MaterialTheme.typography.bodyMedium)
+                        Text(text = movie.rating, style = MaterialTheme.typography.bodyMedium)
+                    }
                 }
 
                 Icon(
