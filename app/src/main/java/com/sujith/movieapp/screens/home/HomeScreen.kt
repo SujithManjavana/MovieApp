@@ -34,6 +34,7 @@ import androidx.navigation.NavController
 import com.sujith.movieapp.model.Movie
 import com.sujith.movieapp.model.getMovies
 import com.sujith.movieapp.navigation.MovieScreens
+import com.sujith.movieapp.widgets.MovieItem
 
 @Composable
 fun HomeScreen(navController: NavController) {
@@ -76,31 +77,3 @@ fun MyTopAppBar() {
 }
 
 
-@Composable
-fun MovieItem(movie: Movie, onItemClick: (String) -> Unit) {
-    Card(
-        modifier = Modifier
-            .padding(16.dp)
-            // .height(130.dp)
-            .fillMaxWidth()
-            .clickable {
-                onItemClick(movie.id)
-            },
-        shape = RoundedCornerShape(corner = CornerSize(12.dp)),
-        elevation = CardDefaults.cardElevation(6.dp)
-    ) {
-        Row(
-            verticalAlignment = Alignment.CenterVertically,
-            horizontalArrangement = Arrangement.Start
-        ) {
-            Surface(
-                modifier = Modifier
-                    .size(100.dp)
-                    .padding(12.dp), shape = RectangleShape
-            ) {
-                Icon(imageVector = Icons.Default.AccountCircle, contentDescription = "Movie image")
-            }
-            Text(text = movie.title)
-        }
-    }
-}
